@@ -38,11 +38,11 @@ LOG_DIR = os.path.join(LOCALAPPDATA, "VoiceTranscriber")
 LOG_PATH = os.path.join(LOG_DIR, "voice-transcriber.log")
 RATE = 16000  # what gets uploaded: 16 kHz mono 16-bit WAV (5 min is ~9.6 MB, under OpenAI's 25 MB)
 
-MODELS = ["gpt-4o-transcribe", "gpt-4o-mini-transcribe", "whisper-1"]
+MODELS = ["gpt-transcribe", "gpt-4o-transcribe", "gpt-4o-mini-transcribe", "whisper-1"]
 LENGTHS = [(60, "1 min"), (120, "2 min"), (300, "5 min"), (600, "10 min"), (900, "15 min")]
 DEFAULTS = {
     "openaiKey": "",
-    "model": "gpt-4o-transcribe",
+    "model": "gpt-transcribe",
     "language": "",
     "autoPaste": True,
     "maxSeconds": 300,
@@ -115,7 +115,8 @@ def is_prompt_echo(text, cfg):
         return False
     norm = lambda s: re.sub(r"[^a-z0-9]", "", s.lower())
     t = norm(text)
-    return t == norm(" ".join(vocab)) or norm(" ".join(vocab[:4])) in t
+    # gpt-4o-transcribe has also returned just a bare "context:".
+    return t == norm(" ".join(vocab)) or norm(" ".join(vocab[:4])) in t or t == "context"
 
 
 def multipart(fields, wav_bytes):
@@ -131,7 +132,7 @@ def multipart(fields, wav_bytes):
 
 def transcribe(wav_bytes, cfg):
     """Returns (True, text) or (False, a short human-readable error)."""
-    fields = {"model": cfg.get("model") or "gpt-4o-transcribe"}
+    fields = {"model": cfg.get("model") or "gpt-transcribe"}
     vocab = cfg.get("vocabulary") or []
     if vocab:
         fields["prompt"] = ", ".join(vocab)

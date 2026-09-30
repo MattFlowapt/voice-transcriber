@@ -67,7 +67,7 @@ if (Test-Path $cfg) {
     }
     $settings = [ordered]@{
         openaiKey    = "$Key".Trim()
-        model        = 'gpt-4o-transcribe'
+        model        = 'gpt-transcribe'
         language     = ''
         autoPaste    = $true
         maxSeconds   = 300

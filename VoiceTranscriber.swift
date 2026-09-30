@@ -1,5 +1,5 @@
 // VoiceTranscriber — press ⌥Space anywhere to record, press again to stop.
-// Audio is transcribed by OpenAI (gpt-4o-transcribe) and the text is pasted
+// Audio is transcribed by OpenAI (gpt-transcribe by default) and the text is pasted
 // straight into the frontmost app (and left on the clipboard). Esc cancels.
 //
 // Notes: tap ⌥N while recording to ALSO keep the dictation as a note (it still
@@ -682,7 +682,8 @@ func isPromptEcho(_ text: String) -> Bool {
     let t = norm(text)
     let whole = norm(vocab.joined(separator: " "))
     let opening = norm(vocab.prefix(4).joined(separator: " "))
-    return t == whole || t.contains(opening)
+    // …or as just the label on its own: gpt-4o-transcribe has returned a bare "context:".
+    return t == whole || t.contains(opening) || t == "context"
 }
 
 // MARK: - Paste
@@ -1722,7 +1723,7 @@ final class SettingsWindow: NSObject, NSTextFieldDelegate {
     private let path = ("~/.config/voice-transcriber/config.json" as NSString).expandingTildeInPath
     private let width: CGFloat = 440
     private let inner: CGFloat = 396
-    private let models = ["gpt-4o-transcribe", "gpt-4o-mini-transcribe", "whisper-1"]
+    private let models = ["gpt-transcribe", "gpt-4o-transcribe", "gpt-4o-mini-transcribe", "whisper-1"]
     private let lengths: [(Int, String)] = [(60, "1 min"), (120, "2 min"), (300, "5 min"),
                                             (600, "10 min"), (900, "15 min")]
     private let tabTitles = ["Words", "Recording"]
@@ -1817,7 +1818,7 @@ final class SettingsWindow: NSObject, NSTextFieldDelegate {
         let reps = d["replacements"] as? [String: String] ?? [:]
         fixes = reps.keys.sorted { $0.lowercased() < $1.lowercased() }.map { ($0, reps[$0]!) }
         names = d["vocabulary"] as? [String] ?? []
-        let m = d["model"] as? String ?? "gpt-4o-transcribe"
+        let m = d["model"] as? String ?? "gpt-transcribe"
         if model.item(withTitle: m) == nil { model.addItem(withTitle: m) }
         model.selectItem(withTitle: m)
         let secs = (d["maxSeconds"] as? NSNumber)?.intValue ?? 300
@@ -2227,7 +2228,7 @@ final class SettingsWindow: NSObject, NSTextFieldDelegate {
     @discardableResult @objc func save() -> Bool {
         func trim(_ s: String) -> String { s.trimmingCharacters(in: .whitespacesAndNewlines) }
         var d = raw()
-        d["model"] = model.titleOfSelectedItem ?? "gpt-4o-transcribe"
+        d["model"] = model.titleOfSelectedItem ?? "gpt-transcribe"
         let lang = trim(language.stringValue)
         if lang.isEmpty { d.removeValue(forKey: "language") } else { d["language"] = lang }
         d["autoPaste"] = autoPaste.isOn

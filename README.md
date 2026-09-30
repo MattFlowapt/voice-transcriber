@@ -2,7 +2,7 @@
 
 Talk instead of type, in any app. Press the hotkey, say what you want, press it again,
 and your words are typed wherever your cursor is. Transcription is done by OpenAI
-(`gpt-4o-transcribe`) using your own API key.
+(`gpt-transcribe`) using your own API key.
 
 |  | macOS | Windows |
 |---|---|---|
@@ -33,8 +33,8 @@ pay-as-you-go account.
    **Create new secret key**, name it "Voice Transcriber", copy it (it starts with `sk-`).
    It is shown only once.
 
-Cost: about $0.006 per minute of talking (OpenAI's price at the time of writing), so $5 is
-roughly 14 hours of dictation. The key is stored only on your computer.
+Cost: about $0.0045 per minute of talking (OpenAI's price at the time of writing), so $5 is
+roughly 18 hours of dictation. The key is stored only on your computer.
 
 ## 2. Install
 

@@ -60,7 +60,7 @@ if [ ! -f "$CONFIG_DIR/config.json" ]; then
   cat > "$CONFIG_DIR/config.json" <<EOF
 {
   "openaiKey": "$KEY_JSON",
-  "model": "gpt-4o-transcribe",
+  "model": "gpt-transcribe",
   "autoPaste": true,
   "maxSeconds": 300,
   "vocabulary": ["Claude", "ChatGPT", "OpenAI"],
