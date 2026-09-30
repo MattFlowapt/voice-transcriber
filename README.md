@@ -102,6 +102,18 @@ Needs the Xcode command-line tools (`xcode-select --install`).
 Then copy `VoiceTranscriber.app` to `/Applications`. The whole Mac app is one Swift file,
 `VoiceTranscriber.swift`. The Windows app is one Python file, `windows/voice_transcriber.py`.
 
+## Found a problem? Fixed one?
+
+Pull requests are very welcome, especially for the Windows version, which is new.
+
+- **Fixed something?** Fork the repo, make the change, and open a pull request with a line
+  on what was wrong and how you tested it. If Claude fixed it for you, just ask Claude to
+  "send this fix as a pull request to MattFlowapt/voice-transcriber".
+- **Found a bug but no fix?** [Open an issue](https://github.com/MattFlowapt/voice-transcriber/issues)
+  with your system (macOS or Windows version), what you did, what happened, and the last
+  lines of the log (Windows: also the output of `--check`).
+- **Never paste your OpenAI key**, `config.json` or your notes into an issue or pull request.
+
 ## License
 
 MIT (see [LICENSE](LICENSE)).

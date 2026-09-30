@@ -70,6 +70,16 @@ tray icon, recording, paste, pill), don't stop at reporting it:
   the app), then repeat steps 3 and 4;
 - tell the user what you changed and why.
 
+## Sending a fix back (either system)
+
+If you changed any file from this repo to make it work, ask the user whether to send the fix
+back so everyone gets it. Only with their OK:
+`gh repo fork MattFlowapt/voice-transcriber --clone`, apply the same change there, commit it
+with a message saying what was broken and how you verified the fix, and `gh pr create`
+against `MattFlowapt/voice-transcriber` (`main`). Include only source changes: never their
+key, `config.json`, notes, or logs that might contain dictated text. If they have no GitHub
+account or `gh`, give them a short summary of the change to pass on instead.
+
 Restart on Windows: re-run `install.ps1`, or quit from the tray icon and start the "Voice
 Transcriber" shortcut in the Start-up folder. Uninstall: quit from the tray, then delete
 `%LOCALAPPDATA%\VoiceTranscriber` and `Voice Transcriber.lnk` in
